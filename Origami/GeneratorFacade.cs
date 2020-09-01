@@ -3,14 +3,35 @@ using System.Linq;
 using Origami.Models;
 using System.Text.Json;
 using System.Collections.Generic;
+using System.Data;
 
 namespace Origami
 {
     public static class GeneratorFacade
     {
+        /// <summary>
+        /// This method is intentionally using file stream operations and 
+        /// doesn't pass any filestream or paths to the Generate method it
+        /// calls.
+        /// </summary>
+        /// <param name="opt"></param>
         public static void Generate(Options opt)
         {
             var assesment = GetAssesment(opt.JsonFile);
+            var table = Generate(assesment);
+            DMAResultsWriter.WriteExcel(table, opt.OutputXlsxFile);
+
+        }
+
+        /// <summary>
+        /// This method is intentionally writtent to facilitate testing. 
+        /// </summary>
+        /// <param name="assesment"></param>
+        /// <returns></returns>
+        public static DataTable Generate(Assesment assesment)
+        {
+            if (assesment.Databases == null)
+                throw new InvalidDataException("No databases to evaluate");
 
             var root = new List<object[]>();
             foreach (var db in assesment.Databases)
@@ -19,8 +40,7 @@ namespace Origami
             }
 
             var table = DataTableCreator.Create(root);
-            DMAResultsWriter.WriteExcel(table, opt.OutputXlsxFile);
-
+            return table;
         }
 
         private static Assesment GetAssesment(string sourceFile)

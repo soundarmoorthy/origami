@@ -15,5 +15,6 @@ namespace Origami
         [Option('o', "output_xlsx_file", Required = true,
             HelpText = Consts.XlsxFileDesc)]
         public string OutputXlsxFile { get; set; }
+
     }
 }
