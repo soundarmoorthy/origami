@@ -9,7 +9,7 @@ namespace Origami
             Parser.Default.ParseArguments<Options>(args)
                 .WithParsed<Options>(opt =>
                 {
-                    GeneratorFacade.Generate(opt.JsonFile, opt.OutputXlsxFile);
+                    GeneratorFacade.Generate(opt);
                 });
         }
 

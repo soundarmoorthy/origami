@@ -5,9 +5,9 @@ using System.Reflection;
 
 namespace Origami
 {
-    public class DataTableCreator
+    public static class DataTableCreator
     {
-        public static void Create(List<object[]> root, string destFile)
+        public static DataTable Create(List<object[]> root)
         {
             DataTable table = DataTableFactory.Create();
             table.TableName = nameof(Origami.Models.Assesment);
@@ -15,8 +15,8 @@ namespace Origami
             {
                 PopulateData(entry, ref table);
             }
+            return table;
 
-            DMAResultsWriter.WriteExcel(table, destFile);
         }
 
         private static void PopulateData(object[] objects,

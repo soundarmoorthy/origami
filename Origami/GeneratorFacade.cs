@@ -8,72 +8,76 @@ namespace Origami
 {
     public static class GeneratorFacade
     {
-        public static void Generate(string sourceFile, string destFile)
+        public static void Generate(Options opt)
         {
-            var obj = assesment(sourceFile);
+            var assesment = GetAssesment(opt.JsonFile);
 
             var root = new List<object[]>();
-            foreach (var db in obj.Databases)
+            foreach (var db in assesment.Databases)
             {
-                Add(db, root);
+                Add(assesment, db, root);
             }
+
+            var table = DataTableCreator.Create(root);
+            DMAResultsWriter.WriteExcel(table, opt.OutputXlsxFile);
 
         }
 
-        private static Assesment assesment(string sourceFile)
+        private static Assesment GetAssesment(string sourceFile)
         {
             var json = File.ReadAllText(sourceFile);
             var assesment = JsonSerializer.Deserialize<Assesment>(json);
             return assesment;
         }
 
-        private static void Add(Database db,
+        private static void Add(Assesment assesment, Database db,
             List<object[]> root)
         {
-            var list = db.AssessmentRecommendations;
-            if (!list.Any())
+            var recomList = db.AssessmentRecommendations;
+            if (!recomList.Any())
             {
-                root.Add(new object[] { db });
+                root.Add(new object[] { assesment, db });
                 return;
             }
 
-            foreach (var l in list)
+            foreach (var rec in recomList)
             {
-                Add(db, l, root);
+                Add(assesment, db, rec, root);
             }
         }
 
-        private static void Add(Database db, AssessmentRecommendation l,
+        private static void Add(Assesment assesment,
+            Database db, AssessmentRecommendation recom,
             List<object[]> root)
         {
-            var list = l.ImpactedObjects;
-            if (!list.Any())
+            var impactedObjs = recom.ImpactedObjects;
+            if (!impactedObjs.Any())
             {
-                root.Add(new object[] { db, l });
+                root.Add(new object[] { assesment, db, recom });
                 return;
             }
 
-            foreach (var obj in list)
+            foreach (var impacted in impactedObjs)
             {
-                Add(db, l, obj, root);
+                Add(assesment, db, recom, impacted, root);
             }
         }
 
-        private static void Add(Database db, AssessmentRecommendation l,
-            ImpactedObject obj, List<object[]> root)
+        private static void Add(Assesment assesment, Database db,
+            AssessmentRecommendation recom,
+            ImpactedObject impacted, List<object[]> root)
         {
-            var list = obj.SuggestedFixes;
+            var list = impacted.SuggestedFixes;
             if (!list.Any())
             {
-                root.Add(new object[] { db, l, obj });
+                root.Add(new object[] { assesment, db, recom, impacted });
                 return;
             }
 
             foreach (var fix in list)
             {
-                root.Add(new object[] { db, l, obj, fix });
+                root.Add(new object[] { assesment, db, recom, impacted, fix });
             }
         }
-
     }
 }
