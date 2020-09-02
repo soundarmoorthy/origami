@@ -19,12 +19,13 @@ Note : This is only for building and development. If you are downloading the bin
 * .NET Core 3.1 runtime
 * Micorsoft Excel (For viewing the output produced from the tool)
 
-### How to download and use it 
+<!--- ### How to download and use it 
+
 * Goto the releases page. Download the zip file for the operating system of choice.
 * Once downloaded from the root folder run as follows 
 ```
 ./Origami -i <Path_To_Input_File> -o <Path_to_Output_File>
-```
+``` -->
 
 ### How to build and use it
 * Download the repository. 
