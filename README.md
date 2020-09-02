@@ -1,5 +1,9 @@
+![An origami image](https://github.com/soundarmoorthy/origami/blob/master/origami.jpg?raw=true&sanitize=true)
+
 ### Summary
 Origami is a .NET Core console application that will convert a hierarchial json file from the azure database migration tool, to a flatterned excel file.
+
+
 
 ### Why Origami
 Origami is a data warehousing tool for the data genereated by the Microsoft [Data Migration Assistant (DMA)](https://docs.microsoft.com/en-us/sql/dma/dma-overview?view=sql-server-ver15) tool. This tool is used to analyze on-prem SQL Server databases and produce a report that will show the list of incompatibilities / warnings when migrating them to the cloud. Unfortunately the tool produces a json file that is not very helpful in socializing the output, slice and dice and play around. Origimai takes this json file as input and produces a flatterned excel file that has all the data as columns by introducing redundancy. Once converted it's easy to answer some of the following questions easily
@@ -15,12 +19,13 @@ Note : This is only for building and development. If you are downloading the bin
 * .NET Core 3.1 runtime
 * Micorsoft Excel (For viewing the output produced from the tool)
 
-### How to download and use it 
+<!--- ### How to download and use it 
+
 * Goto the releases page. Download the zip file for the operating system of choice.
 * Once downloaded from the root folder run as follows 
 ```
 ./Origami -i <Path_To_Input_File> -o <Path_to_Output_File>
-```
+``` -->
 
 ### How to build and use it
 * Download the repository. 
