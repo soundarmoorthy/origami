@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+        <CustomCommands>
+          <CustomCommands>
+            <Command>
+              <type>AfterBuild</type>
+              <command>npm install</command>
+              <workingdir>${ProjectDir}/wwwroot/origami</workingdir>
+            </Command>
+          </CustomCommands>
+        </CustomCommands>
+    </PropertyGroup>
+    <ItemGroup>
+      <Folder Include="wwwroot\public\" />
+      <Folder Include="wwwroot\scripts\" />
+      <Folder Include="wwwroot\src\" />
+    </ItemGroup>
+</Project>
